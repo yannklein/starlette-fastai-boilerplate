@@ -20,8 +20,8 @@ model_filepath = "models/model.pth"
 # Load classes info from JSON
 with open(path / 'classes/sushi.json') as json_file:
     classes = json.load(json_file)
-classes = map(lambda classe: classe['en'], classes)
-classes = sorted(classes)
+classes_en = map(lambda classe: classe['en'], classes)
+classes_en = sorted(classes_en)
 
 # If model not present, download it from its dropbox repo
 export_file_url = f'https://www.dropbox.com/s/k9wqc1p5lkgrav8/model.pth?raw=1'
@@ -46,7 +46,7 @@ async def setup_learner():
         print("Model uploaded and stored!")
     try:
         print("Model learning setup")
-        data_bunch = ImageDataBunch.single_from_classes(path, classes, ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
+        data_bunch = ImageDataBunch.single_from_classes(path, classes_en, ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)
         learn = cnn_learner(data_bunch, models.resnet34, pretrained=False)
         learn.load("model")
 
@@ -83,7 +83,7 @@ async def analyze(request):
     prediction = learn.predict(img)
     print('prediction:', f'{str(prediction[0])} with {round(prediction[2][prediction[1].item()].item() * 100)}%')
     details = {}
-    for index, each_class in enumerate(classes):
+    for index, each_class in enumerate(classes_en):
         details[each_class] = round(prediction[2][index].item() * 100)
     print('prediction details:',details)
 
@@ -91,7 +91,8 @@ async def analyze(request):
     json_response = {
         'result': str(prediction[0]),
         'resultPct': round(prediction[2][prediction[1].item()].item() * 100),
-        'details': details
+        'details': details,
+        'classes': classes
     }
     print(json_response)
 

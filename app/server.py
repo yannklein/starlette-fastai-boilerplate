@@ -23,6 +23,16 @@ with open(path / 'classes/sushi.json') as json_file:
 classes = map(lambda classe: classe['en'], classes)
 classes = sorted(classes)
 
+# If model not present, download it from its dropbox repo
+export_file_url = f'https://www.dropbox.com/s/k9wqc1p5lkgrav8/model.pth?raw=1'
+async def download_file(url, dest):
+    if dest.exists(): return
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            data = await response.read()
+            with open(dest, 'wb') as f:
+                f.write(data)
+
 # Initialize Starlette app
 app = Starlette()
 app.add_middleware(CORSMiddleware, allow_origins=['*'], allow_headers=['X-Requested-With', 'Content-Type'])
@@ -30,6 +40,10 @@ app.mount('/static', StaticFiles(directory='app/static'))
 
 # Learning setup (dependent of your library!)
 async def setup_learner():
+    if not os.path.isfile(path / model_filepath):
+        print("No model stored in the project. Uploading from Dropbox...")
+        await download_file(export_file_url, path / model_filepath)
+        print("Model uploaded and stored!")
     try:
         print("Model learning setup")
         data_bunch = ImageDataBunch.single_from_classes(path, classes, ds_tfms=get_transforms(), size=224).normalize(imagenet_stats)

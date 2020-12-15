@@ -1,0 +1,24 @@
+.section-analyzer {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  height: 700px;
+  margin-bottom: 24px;
+}
+
+.section-analyzer img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.section-contact {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  height: 500px;
+}
+
+.section-contact img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}

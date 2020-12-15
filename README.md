@@ -1,4 +1,5 @@
 # Starlette + FastAI boilerplate
+
 A simple boilerplate of [Starlette](https://www.starlette.io/) webapp running a AI model that recognizes Sushis.
 The model is built using [FastAI library](https://github.com/fastai/fastai)
 

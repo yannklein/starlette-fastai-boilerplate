@@ -1,0 +1,19 @@
+@import url('image-analyzer.css');
+@import url('container.css');
+@import url('section.css');
+@import url('banner.css');
+
+body {
+  background-color: #fff;
+  font-family: sans-serif;
+  margin: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: #FF4F64;
+}

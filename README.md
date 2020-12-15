@@ -11,9 +11,16 @@ Clone the rep on your machine:
 git clone git@github.com:yannklein/starlette-fastai-boilerplate.git
 ```
 
-Install the project packages:
+2 ways to install the packages (choose one!)
+
+- Install the project packages with pipenv:
 ```
 pipenv install
+```
+
+- Install the project packages with requirements.txt:
+```
+pip install -r requirements.txt
 ```
 
 Run the webapp on a local server:

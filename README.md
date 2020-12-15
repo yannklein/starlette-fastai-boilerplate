@@ -20,3 +20,5 @@ Run the webapp on a local server:
 ```
 python app/server.py serve
 ```
+
+Open `localhost:5000` on Chrome.
